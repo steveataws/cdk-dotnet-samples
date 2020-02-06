@@ -6,6 +6,7 @@ using Amazon.CDK.AWS.CodeBuild;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
 using Amazon.CDK.AWS.CodeDeploy;
+using System.Collections.Generic;
 
 namespace Appdeployment
 {
@@ -24,15 +25,18 @@ namespace Appdeployment
                 MaxAzs = 3
             });
 
-            // instances are placed into private subnets by default
+            var image = new LookupMachineImage(new LookupMachineImageProps
+            {
+                // maps to "Amazon Linux 2 with .NET Core 3.0 and Mono 5.18"
+                Name = "amzn2-ami-hvm-2.0.*-x86_64-gp2-mono-*",
+                Owners = new [] { "amazon" }
+            });
+
             var scalingGroup = new AutoScalingGroup(this, "appASG", new AutoScalingGroupProps
             {
                 Vpc = vpc,
                 InstanceType = InstanceType.Of(InstanceClass.BURSTABLE3, InstanceSize.MEDIUM),
-                MachineImage = new LookupMachineImage(new LookupMachineImageProps
-                {
-                    Name = "Amazon Linux 2 with .NET Core 3.0*"
-                }),
+                MachineImage = image,
                 MinCapacity = 1,
                 MaxCapacity = 4,
                 AllowAllOutbound = true
