@@ -3,6 +3,18 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# repo specific files
+temp/
+
+# AWS CDK generated templates and assets
+.cdk.staging
+cdk.out/
+assets/
+
+# AWS CDK account context file (note - normal practise *is* to place cdk.context.json
+# under source control in your own repos, I'm choosing to not do that in this public repo)
+cdk.context.json
+
 # User-specific files
 *.rsuser
 *.suo
@@ -30,6 +42,9 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+
+# VSCode settings
+.vscode/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
