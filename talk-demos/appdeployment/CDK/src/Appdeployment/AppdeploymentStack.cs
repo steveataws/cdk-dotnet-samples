@@ -74,8 +74,8 @@ namespace Appdeployment
 
             var build = new PipelineProject(this, "CodeBuild", new PipelineProjectProps
             {
-                // relative path to sample app's file
-                BuildSpec = BuildSpec.FromSourceFilename("talk-demos/appdeployment/SampleApp/buildspec.yml"),
+                // relative path to sample app's file (single html page for now)
+                BuildSpec = BuildSpec.FromSourceFilename("talk-demos/appdeployment/SimplePage/buildspec.yml"),
                 Environment = new BuildEnvironment
                 {
                     BuildImage = LinuxBuildImage.AMAZON_LINUX_2_2
