@@ -31,6 +31,14 @@ namespace Appdeployment
                 Owners = new [] { "amazon" }
             });
 
+            var userData = UserData.ForLinux();
+            userData.AddCommands(new string[]
+            {
+                "sudo yum install -y httpd",
+                "sudo systemctl start httpd",
+                "sudo systemctl enable httpd"
+            });
+
             var scalingGroup = new AutoScalingGroup(this, "appASG", new AutoScalingGroupProps
             {
                 Vpc = vpc,
@@ -38,7 +46,8 @@ namespace Appdeployment
                 MachineImage = image,
                 MinCapacity = 1,
                 MaxCapacity = 4,
-                AllowAllOutbound = true
+                AllowAllOutbound = true,
+                UserData = userData
             });
 
             var alb = new ApplicationLoadBalancer(this, "appLB", new ApplicationLoadBalancerProps

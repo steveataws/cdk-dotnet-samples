@@ -1,12 +1,10 @@
 version: 0.2
 phases:
-  install:
-    runtime-versions:
-      python: 3.8
 artifacts:
   files:
     - index.html
     - appspec.yml
-    - installApp.sh
+    - before_install.sh
+    - restart_server.sh
   base-directory:
     ./talk-demos/appdeployment/SimplePage

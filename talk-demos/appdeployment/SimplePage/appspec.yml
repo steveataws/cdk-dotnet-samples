@@ -1,9 +1,12 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /home/ec2-user
+  - source: /index.html
+    destination: /var/www/html/
 hooks:
-  ApplicationStart:
-    - location: ./installApp.sh
+  BeforeInstall:
+    - location: before_install
+      timeout: 300
+  AfterInstall:
+    - location: restart_server
       timeout: 300
