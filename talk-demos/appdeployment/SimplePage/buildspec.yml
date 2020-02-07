@@ -8,3 +8,5 @@ artifacts:
     - index.html
     - appspec.yml
     - installApp.sh
+  base-directory:
+    ./talk-demos/appdeployment/SimplePage
