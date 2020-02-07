@@ -8,7 +8,7 @@ namespace Appdeployment
         {
             var app = new App();
 
-            new AppdeploymentStack(app, "appStack", new StackProps
+            new AppdeploymentStack(app, "appDeploymentStack", new StackProps
             {
                 Env = new Amazon.CDK.Environment
                 {

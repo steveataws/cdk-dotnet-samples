@@ -6,7 +6,6 @@ using Amazon.CDK.AWS.CodeBuild;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
 using Amazon.CDK.AWS.CodeDeploy;
-using System.Collections.Generic;
 
 namespace Appdeployment
 {
@@ -97,6 +96,11 @@ namespace Appdeployment
                 AutoScalingGroups = new [] { scalingGroup }
             });
 
+            // SecretValue.SsmSecure is not currently supported for setting OauthToken,
+            // and haven't gotten the SecretsManager approach to work either so
+            // resorting to keeping my token in an environment var for now!
+            var oauthToken = SecretValue.PlainText(System.Environment.GetEnvironmentVariable("GitHubPersonalToken"));
+
             var pipeline = new Pipeline(this, "sampleappPipeline", new PipelineProps
             {
                 Stages = new StageProps[]
@@ -112,7 +116,7 @@ namespace Appdeployment
                                 Branch = "master",
                                 Repo = this.Node.TryGetContext("repo-name").ToString(),
                                 Owner = this.Node.TryGetContext("repo-owner").ToString(),
-                                OauthToken = SecretValue.SsmSecure("GitHubPersonalToken", "1"),
+                                OauthToken = oauthToken,
                                 Output = _sourceOutput
                             })
                         }
