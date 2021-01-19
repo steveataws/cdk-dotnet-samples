@@ -9,26 +9,13 @@ namespace HelloWorld
     {
         public HelloWorldStack(Construct parent, string id, IStackProps props) : base(parent, id, props)
         {
-            // Create a S3 bucket to host a static website, with global read access
+            // Create bucket to host a static website
             var bucket = new Bucket(this, "WebsiteBucket", new BucketProps
             {
                 BucketName = "cdk-helloworld-website-demo",
-                AccessControl = BucketAccessControl.PUBLIC_READ,
+                PublicReadAccess = true,
                 WebsiteIndexDocument = "index.html"
             });
-
-            // grant access to the pages and resources in the website (setting
-            // Public Read Only on the bucket is not sufficient)
-            bucket.AddToResourcePolicy(new PolicyStatement(new PolicyStatementProps
-            {
-                Effect = Effect.ALLOW,
-                Actions = new [] { "s3:GetObject" },
-                Resources = new [] { bucket.ArnForObjects("*") },
-                Principals = new IPrincipal[]
-                {
-                    new AnyPrincipal()
-                }
-            }));
 
             // deploy the site
             new BucketDeployment(this, "WebsiteBucketDeployment", new BucketDeploymentProps
