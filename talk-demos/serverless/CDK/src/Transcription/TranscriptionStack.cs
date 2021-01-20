@@ -24,8 +24,7 @@ namespace Transcription
 
             var startJobFunction = new Function(this, "StartJobFunction", new FunctionProps
             {
-                Tracing = Tracing.ACTIVE,
-                Runtime = Runtime.DOTNET_CORE_2_1,
+                Runtime = Runtime.DOTNET_CORE_3_1,
                 Timeout = Duration.Seconds(30),
                 MemorySize = 256,
                 Environment = new Dictionary<string, string>()
@@ -74,8 +73,7 @@ namespace Transcription
 
             var notifyCompletionFunction = new Function(this, "NotifyCompleteFunction", new FunctionProps
             {
-                Tracing = Tracing.ACTIVE,
-                Runtime = Runtime.DOTNET_CORE_2_1,
+                Runtime = Runtime.DOTNET_CORE_3_1,
                 Timeout = Duration.Seconds(30),
                 MemorySize = 256,
                 Environment = new Dictionary<string, string>()
@@ -112,10 +110,15 @@ namespace Transcription
 
             outputBucket.GrantWrite(notifyCompletionFunction);
 
-            // emit the name of the input bucket so we know where to upload content!
+            // emit the names of the buckets, so we at least know where to upload content!
             new CfnOutput(this, "InputBucket", new CfnOutputProps
             {
                 Value = inputBucket.BucketName
+            });
+
+            new CfnOutput(this, "OutputBucket", new CfnOutputProps
+            {
+                Value = outputBucket.BucketName
             });
         }
     }

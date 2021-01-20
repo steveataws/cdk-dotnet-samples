@@ -36,11 +36,6 @@ namespace NotifyTranscriptionJobComplete
         /// <returns></returns>
         public async Task FunctionHandler(S3Event evnt, ILambdaContext context)
         {
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LAMBDA_TASK_ROOT")))
-            {
-                Amazon.XRay.Recorder.Handlers.AwsSdk.AWSSDKHandler.RegisterXRayForAllServices();
-            }
-
             var topicArn = Environment.GetEnvironmentVariable("TRANSCRIBE_TOPIC_ARN");
 
             foreach (var record in evnt.Records)

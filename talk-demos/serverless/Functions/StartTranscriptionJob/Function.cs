@@ -47,11 +47,6 @@ namespace StartTranscriptionJob
         /// <returns></returns>
         public async Task FunctionHandler(S3Event evnt, ILambdaContext context)
         {
-            if(!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LAMBDA_TASK_ROOT")))
-            {
-                Amazon.XRay.Recorder.Handlers.AwsSdk.AWSSDKHandler.RegisterXRayForAllServices();
-            }
-
             var region = Environment.GetEnvironmentVariable("AWS_REGION");
             var outputBucket = Environment.GetEnvironmentVariable("TRANSCRIBE_OUTPUT_BUCKET");
             var languageCode = Environment.GetEnvironmentVariable("TRANSCRIBE_LANGUAGE_CODE");

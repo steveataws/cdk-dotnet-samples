@@ -1,5 +1,9 @@
 [CmdletBinding()]
 param(
+    # sets the credential profile to be used in the cdk deployment
+    [Parameter(Mandatory)]
+    [string]$ProfileName,
+
     # deployment region (not all regions support Amazon Transcribe yet)
     [Parameter(Mandatory)]
     [string]$Region,
@@ -26,7 +30,7 @@ dotnet lambda package --project-location ../Functions/NotifyTranscriptionJobComp
 # Deploy the stack using the CDK CLI; the app will determine target region
 # from the supplied context, overriding any defaults associated with my
 # default credential profile. To delete this stack, use 'cdk destroy -c Region=value'
-$command = "cdk deploy -c Region=$Region -c SubscriberEmail=$SubscriberEmail"
+$command = "cdk deploy -c Region=$Region -c SubscriberEmail=$SubscriberEmail --profile $ProfileName"
 if ($LanguageCode) {
     $command += " -c LanguageCode=$LanguageCode"
 }
