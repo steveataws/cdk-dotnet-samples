@@ -3,11 +3,11 @@ using Amazon.CDK.AWS.S3;
 using Amazon.CDK.AWS.SQS;
 using Amazon.CDK.AWS.S3.Notifications;
 
-namespace CustomResources
+namespace ResourceEvents
 {
-    public class CustomResourcesStack : Stack
+    public class ResourceEventsStack : Stack
     {
-        public CustomResourcesStack(Construct parent, string id, IStackProps props) : base(parent, id, props)
+        public ResourceEventsStack(Construct parent, string id, IStackProps props) : base(parent, id, props)
         {
             var bucket = new Bucket(this, "BucketForEventNotifications");
 

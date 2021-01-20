@@ -1,3 +1,6 @@
+This sample shows how easy it is to wire up resources to each other using events. In
+declarative templates, this is somewhat more involved.
+
 # Useful commands
 
 * `dotnet build src` compile this app
