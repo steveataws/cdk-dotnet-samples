@@ -1,11 +1,11 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 COPY . /app
 # install nodejs and thus npm
 RUN apt-get update -y && curl -sL https://deb.nodesource.com/setup_10.x | bash --debug && apt-get install nodejs -yq
-RUN dotnet publish -c Release -r linux-musl-x64 -o out 
+RUN dotnet publish -c Release -r linux-musl-x64 -o out
 
-FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-alpine
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine
 WORKDIR /app
 COPY --from=build /app/out ./
 ENV ASPNETCORE_ENVIRONMENT=Production
